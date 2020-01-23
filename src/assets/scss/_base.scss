@@ -1,6 +1,6 @@
 :root {
   box-sizing: border-box;
-  --background-color: #eee;
+  --background-color: #{$backgroundColor};
   --text-color: #2c3e50;
 }
 
