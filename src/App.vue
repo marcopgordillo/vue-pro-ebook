@@ -8,9 +8,17 @@
         <div class="col font-weight-bold">Task</div>
         <div class="col-2 font-weight-bold">Done</div>
       </div>
-      <div class="row" v-for="task in tasks" :key="task.action">
+      <div class="row" v-for="task in filteredTasks" :key="task.action">
         <div class="col">{{ task.action }}</div>
-        <div class="col-2">{{ task.done }}</div>
+        <div class="col-2 text-center">
+          <input type="checkbox" v-model="task.done" class="form-check-input">
+        </div>
+      </div>
+      <div class="row bg-secondary py-2 mt-2 text-white">
+        <div class="col text-center">
+          <input type="checkbox" v-model="hideCompleted" class="form-check-input">
+          <label class="form-check-label font-weight-bold">Hide Completed Tasks</label>
+        </div>
       </div>
     </div>
   </div>
@@ -27,7 +35,14 @@ export default {
         { action: "Get Shoes", done: false },
         { action: "Collect Tickets", done: true },
         { action: "Call Joe", done: false },
-      ]
+      ],
+      hideCompleted: true
+    }
+  },
+  computed: {
+    filteredTasks() {
+      return this.hideCompleted ?
+        this.tasks.filter(t => !t.done) : this.tasks
     }
   }
 };
