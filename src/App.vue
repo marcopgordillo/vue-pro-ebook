@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <h4 class="bg-primary text-white text-center p-2">
-      {{ name }}'s To Do List
-    </h4>
+    <h4 class="bg-primary text-white text-center p-2">{{ name }}'s To Do List</h4>
     <div class="container-fluid p-4">
       <div class="row">
         <div class="col font-weight-bold">Task</div>
@@ -14,10 +12,20 @@
           <input type="checkbox" v-model="task.done" class="form-check-input">
         </div>
       </div>
+      <div class="row py-2">
+        <form @submit.prevent="addNewTodo" class="form-inline">
+          <div class="col">
+            <input v-model="newItemText" class="form-control" type="text">
+          </div>
+          <div class="col-2">
+            <button class="btn btn-primary">Add</button>
+          </div>
+        </form>
+      </div>
       <div class="row bg-secondary py-2 mt-2 text-white">
-        <div class="col text-center">
-          <input type="checkbox" v-model="hideCompleted" class="form-check-input">
-          <label class="form-check-label font-weight-bold">Hide Completed Tasks</label>
+        <div class="col text-center form-check">
+          <input type="checkbox" v-model="hideCompleted" class="form-check-input" id="hideCompleted">
+          <label class="form-check-label font-weight-bold" for="hideCompleted">Hide Completed Tasks</label>
         </div>
       </div>
     </div>
@@ -30,19 +38,27 @@ export default {
   data() {
     return {
       name: "Marco",
-      tasks: [
-        { action: "Buy flowers", done: false },
-        { action: "Get Shoes", done: false },
-        { action: "Collect Tickets", done: true },
-        { action: "Call Joe", done: false },
-      ],
-      hideCompleted: true
+      tasks: [],
+      hideCompleted: true,
+      newItemText: ""
+    };
+  },
+  created() {
+    let data = localStorage.getItem("todos");
+    if (data) {
+      this.tasks = JSON.parse(data);
     }
   },
   computed: {
     filteredTasks() {
-      return this.hideCompleted ?
-        this.tasks.filter(t => !t.done) : this.tasks
+      return this.hideCompleted ? this.tasks.filter(t => !t.done) : this.tasks;
+    }
+  },
+  methods: {
+    addNewTodo() {
+      this.tasks.push({ action: this.newItemText, done: false });
+      localStorage.setItem("todos", JSON.stringify(this.tasks));
+      this.newItemText = "";
     }
   }
 };
