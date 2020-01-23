@@ -1,0 +1,15 @@
+:root {
+  box-sizing: border-box;
+  --background-color: #eee;
+  --text-color: #2c3e50;
+}
+
+*,
+::after,
+::before {
+  box-sizing: inherit;
+}
+
+body {
+  background: var(--background-color);
+}
