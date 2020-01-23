@@ -3,7 +3,7 @@
     <h4 class="bg-primary text-white text-center p-2">{{ name }}'s To Do List</h4>
     <div class="container-fluid p-4">
       <div class="row" v-if="filteredTasks.length === 0">
-        <div class="col text-center font-weight-bold">Nothing to do. Hurrah!</div>
+        <div class="col text-center font-weight-bold">Nothing to do. Hurrah! <i class="fa fa-camera-retro"></i></div>
       </div>
       <template v-else>
         <div class="row">
